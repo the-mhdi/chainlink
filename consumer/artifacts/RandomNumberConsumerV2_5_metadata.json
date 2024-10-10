@@ -11,6 +11,16 @@
 						"internalType": "uint256",
 						"name": "subscriptionId",
 						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "vrfCoordinator",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "keyHash",
+						"type": "bytes32"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -114,37 +124,12 @@
 				"inputs": [
 					{
 						"indexed": false,
-						"internalType": "uint256",
-						"name": "requestId",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
 						"internalType": "uint256[]",
 						"name": "randomWords",
 						"type": "uint256[]"
 					}
 				],
-				"name": "RequestFulfilled",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "requestId",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint32",
-						"name": "numWords",
-						"type": "uint32"
-					}
-				],
-				"name": "RequestSent",
+				"name": "ReturnedRandomness",
 				"type": "event"
 			},
 			{
@@ -152,82 +137,6 @@
 				"name": "acceptOwnership",
 				"outputs": [],
 				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "callbackGasLimit",
-				"outputs": [
-					{
-						"internalType": "uint32",
-						"name": "",
-						"type": "uint32"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "_requestId",
-						"type": "uint256"
-					}
-				],
-				"name": "getRequestStatus",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "fulfilled",
-						"type": "bool"
-					},
-					{
-						"internalType": "uint256[]",
-						"name": "randomWords",
-						"type": "uint256[]"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "keyHash",
-				"outputs": [
-					{
-						"internalType": "bytes32",
-						"name": "",
-						"type": "bytes32"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "lastRequestId",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "numWords",
-				"outputs": [
-					{
-						"internalType": "uint32",
-						"name": "",
-						"type": "uint32"
-					}
-				],
-				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -263,52 +172,8 @@
 			},
 			{
 				"inputs": [],
-				"name": "requestConfirmations",
-				"outputs": [
-					{
-						"internalType": "uint16",
-						"name": "",
-						"type": "uint16"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "requestIds",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "bool",
-						"name": "enableNativePayment",
-						"type": "bool"
-					}
-				],
 				"name": "requestRandomWords",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "requestId",
-						"type": "uint256"
-					}
-				],
+				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
@@ -320,17 +185,12 @@
 						"type": "uint256"
 					}
 				],
-				"name": "s_requests",
+				"name": "s_randomWords",
 				"outputs": [
 					{
-						"internalType": "bool",
-						"name": "fulfilled",
-						"type": "bool"
-					},
-					{
-						"internalType": "bool",
-						"name": "exists",
-						"type": "bool"
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -338,7 +198,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "s_subscriptionId",
+				"name": "s_requestId",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -391,7 +251,16 @@
 		],
 		"devdoc": {
 			"kind": "dev",
-			"methods": {},
+			"methods": {
+				"constructor": {
+					"params": {
+						"keyHash": "- the gas lane to use, which specifies the maximum gas price to bump to",
+						"subscriptionId": "- the subscription ID that this contract uses for funding requests",
+						"vrfCoordinator": "- coordinator, check https://docs.chain.link/vrf/v2-5/supported-networks"
+					}
+				}
+			},
+			"title": "The RandomNumberConsumerV2_5 contract",
 			"version": 1
 		},
 		"userdoc": {
@@ -401,10 +270,13 @@
 					"notice": "Allows an ownership transfer to be completed by the recipient."
 				},
 				"constructor": {
-					"notice": "HARDCODED FOR SEPOLIA COORDINATOR: 0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B"
+					"notice": "Constructor inherits VRFConsumerBaseV2Plus"
 				},
 				"owner()": {
 					"notice": "Get the current owner"
+				},
+				"requestRandomWords()": {
+					"notice": "Requests randomness Assumes the subscription is funded sufficiently; \"Words\" refers to unit of data in Computer Science"
 				},
 				"setCoordinator(address)": {
 					"notice": "Sets the VRF Coordinator addressThis method should only be callable by the coordinator or contract owner"
@@ -413,13 +285,13 @@
 					"notice": "Allows an owner to begin transferring ownership to a new address."
 				}
 			},
-			"notice": "THIS IS AN EXAMPLE CONTRACT THAT USES HARDCODED VALUES FOR CLARITY. THIS IS AN EXAMPLE CONTRACT THAT USES UN-AUDITED CODE. DO NOT USE THIS CODE IN PRODUCTION.",
+			"notice": "A contract that gets random values from Chainlink VRF V2_5",
 			"version": 1
 		}
 	},
 	"settings": {
 		"compilationTarget": {
-			"consumer/y.sol": "SubscriptionConsumer"
+			"consumer/z.sol": "RandomNumberConsumerV2_5"
 		},
 		"evmVersion": "paris",
 		"libraries": {},
@@ -497,12 +369,12 @@
 				"dweb:/ipfs/QmWzLDgcS9jUh4AT65dQRr46ZhGHgQ4KoNfSdFiFTFqneQ"
 			]
 		},
-		"consumer/y.sol": {
-			"keccak256": "0x8b70b6d9117d20f322dfb574c49d4b4c0171cfcc659a1390deb5e158c128333f",
+		"consumer/z.sol": {
+			"keccak256": "0xad4157d941e34e94c252bc7aee5d30230399df58e1dd2313f5f67e67ba175c02",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://92b9c7d1f4094afca93627113853c24cffee3d71802f5c0cc9fe230642bdf26d",
-				"dweb:/ipfs/QmU58Y5yVh3UxiSJbz8gj3rSBPm6DhipwrrZuotxLD8Hgb"
+				"bzz-raw://e923fc9094f1dff965837bf5b607976068131542209ef41c861e55f40164d4ca",
+				"dweb:/ipfs/QmdwfKVfFaXcrpGBNSAuzAxeJKWCFdaXm1toHmP22U5urz"
 			]
 		}
 	},
