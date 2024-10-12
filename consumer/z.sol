@@ -37,9 +37,9 @@ contract RandomNumberConsumerV2_5 is VRFConsumerBaseV2Plus {
 
     // For this example, retrieve 2 random values in one request.
     // Cannot exceed VRFCoordinatorV2_5.MAX_NUM_WORDS.
-    uint32 constant NUM_WORDS = 2;
+    uint32 constant NUM_WORDS = 1;
 
-    uint256[] public s_randomWords;
+    //uint256[] public s_randomWords;
     uint256 public s_requestId;
 
     event ReturnedRandomness(uint256[] randomWords);
@@ -64,6 +64,14 @@ contract RandomNumberConsumerV2_5 is VRFConsumerBaseV2Plus {
      * @notice Requests randomness
      * Assumes the subscription is funded sufficiently; "Words" refers to unit of data in Computer Science
      */
+     struct reqStruct { 
+        uint256 Id;
+        uint256[] randomWords;
+        address proposer; 
+     }
+
+    mapping(uint256 => reqStruct) internal reqMap; 
+
     function requestRandomWords() external onlyOwner {
         // Will revert if subscription is not set and funded.
         s_requestId = s_vrfCoordinator.requestRandomWords(
@@ -78,6 +86,11 @@ contract RandomNumberConsumerV2_5 is VRFConsumerBaseV2Plus {
                 )
             })
         );
+
+        
+        
+    
+        
     }
 
     /**
@@ -90,7 +103,11 @@ contract RandomNumberConsumerV2_5 is VRFConsumerBaseV2Plus {
         uint256 /* requestId */,
         uint256[] calldata randomWords
     ) internal override {
-        s_randomWords = randomWords;
+        reqStruct memory req ; 
+        req.randomWords = randomWords;
+        req.Id = s_requestId;
+        req.proposer = msg.sender; 
+
         emit ReturnedRandomness(randomWords);
     }
 }

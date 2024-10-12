@@ -178,25 +178,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "s_randomWords",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [],
 				"name": "s_requestId",
 				"outputs": [
@@ -274,9 +255,6 @@
 				},
 				"owner()": {
 					"notice": "Get the current owner"
-				},
-				"requestRandomWords()": {
-					"notice": "Requests randomness Assumes the subscription is funded sufficiently; \"Words\" refers to unit of data in Computer Science"
 				},
 				"setCoordinator(address)": {
 					"notice": "Sets the VRF Coordinator addressThis method should only be callable by the coordinator or contract owner"
@@ -370,11 +348,11 @@
 			]
 		},
 		"consumer/z.sol": {
-			"keccak256": "0xad4157d941e34e94c252bc7aee5d30230399df58e1dd2313f5f67e67ba175c02",
+			"keccak256": "0x49e045b7518bed1a524fc2f973ce449f3e3417f50c39e9964de84519c0845ba7",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e923fc9094f1dff965837bf5b607976068131542209ef41c861e55f40164d4ca",
-				"dweb:/ipfs/QmdwfKVfFaXcrpGBNSAuzAxeJKWCFdaXm1toHmP22U5urz"
+				"bzz-raw://e2d8661315b6b91598793b9c744f7187ff4acda60b9bf2eea74c2b9b2cd0c5c7",
+				"dweb:/ipfs/QmSMxMZUojwcxyneHRr6qvE8mTU71Z5EXzx9kLF3Vd6RGy"
 			]
 		}
 	},
