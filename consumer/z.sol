@@ -65,12 +65,12 @@ contract RandomNumberConsumerV2_5 is VRFConsumerBaseV2Plus {
      * Assumes the subscription is funded sufficiently; "Words" refers to unit of data in Computer Science
      */
      struct reqStruct { 
-        uint256 Id;
         uint256[] randomWords;
-        address proposer; 
+        address proposer;
+        bool done; 
      }
 
-    mapping(uint256 => reqStruct) internal reqMap; 
+    mapping(uint256 => reqStruct) public reqMap; 
 
     function requestRandomWords() external onlyOwner {
         // Will revert if subscription is not set and funded.
@@ -105,9 +105,19 @@ contract RandomNumberConsumerV2_5 is VRFConsumerBaseV2Plus {
     ) internal override {
         reqStruct memory req ; 
         req.randomWords = randomWords;
-        req.Id = s_requestId;
         req.proposer = msg.sender; 
+        require(req.done == false, "already done!");
+        req.done = true ;
+        
+        reqMap[s_requestId] = req ;
 
         emit ReturnedRandomness(randomWords);
     }
+    event ReturnedWords(uint256 indexed id, address indexed proposer, uint256[] randomWords) ;
+    function currentNums(uint reqId) public onlyOwner {
+        
+        reqStruct memory req = reqMap[reqId];
+        emit ReturnedWords(reqId, msg.sender, req.randomWords);
+    }
+
 }

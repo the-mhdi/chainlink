@@ -133,8 +133,46 @@
 				"type": "event"
 			},
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "proposer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256[]",
+						"name": "randomWords",
+						"type": "uint256[]"
+					}
+				],
+				"name": "ReturnedWords",
+				"type": "event"
+			},
+			{
 				"inputs": [],
 				"name": "acceptOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "reqId",
+						"type": "uint256"
+					}
+				],
+				"name": "currentNums",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -168,6 +206,30 @@
 				"name": "rawFulfillRandomWords",
 				"outputs": [],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "reqMap",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "proposer",
+						"type": "address"
+					},
+					{
+						"internalType": "bool",
+						"name": "done",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -348,11 +410,11 @@
 			]
 		},
 		"consumer/z.sol": {
-			"keccak256": "0x49e045b7518bed1a524fc2f973ce449f3e3417f50c39e9964de84519c0845ba7",
+			"keccak256": "0x49776724c484e360583c3d8939cc8d2f270a43146f7c0fdc7c3a1a4d88d838e5",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e2d8661315b6b91598793b9c744f7187ff4acda60b9bf2eea74c2b9b2cd0c5c7",
-				"dweb:/ipfs/QmSMxMZUojwcxyneHRr6qvE8mTU71Z5EXzx9kLF3Vd6RGy"
+				"bzz-raw://b6f2463a403b2ecf2a2096269c6a88138aa6119ae76c7076166b0762fa93ef64",
+				"dweb:/ipfs/QmNXTE3MfeoXSEGc15DZYGihrudKYGYPF1TxDp2Dxtdq9H"
 			]
 		}
 	},
